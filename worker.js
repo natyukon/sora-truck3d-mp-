@@ -2,14 +2,15 @@
    1 ห้อง = 1 Durable Object (ชื่อห้อง = รหัสห้อง) · ส่งต่อสถานะรถของแต่ละคนให้คนอื่นในห้อง
    ใช้ WebSocket Hibernation API → ห้องที่ไม่มีข้อความไม่ถูกคิดเวลา · คำว่า "ping" ตอบอัตโนมัติไม่ปลุกห้อง */
 const MAX_PEERS = 8, MAX_MSG = 64 * 1024;
-// โดเมนที่อนุญาตให้ต่อ (เว็บจริง + ลิงก์พรีวิวของ Pages + ทดสอบในเครื่อง) — เพิ่มได้ทาง env ALLOWED_ORIGINS (คั่นด้วย ,)
+// โดเมนที่อนุญาตให้ต่อ (sora-truck-online.pages.dev + ลิงก์พรีวิวของ Pages + ทดสอบในเครื่อง) — เพิ่มได้ทาง env ALLOWED_ORIGINS (คั่นด้วย ,)
 const ORIGIN_OK = (o, env) => {
   if (!o) return false;
   const extra = String(env.ALLOWED_ORIGINS || "").split(",").map(s => s.trim()).filter(Boolean);
   if (extra.includes(o)) return true;
   try {
     const u = new URL(o);
-    if (u.hostname === "sora-project-truck3d.pages.dev" || u.hostname.endsWith(".sora-project-truck3d.pages.dev")) return u.protocol === "https:";
+    for (const d of ["sora-truck-online.pages.dev", "sora-project-truck3d.pages.dev"])
+      if (u.hostname === d || u.hostname.endsWith("." + d)) return u.protocol === "https:";
     if (u.hostname === "localhost" || u.hostname === "127.0.0.1") return true;
   } catch (e) {}
   return false;
