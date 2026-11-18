@@ -1,0 +1,12 @@
+name = "sora-truck3d-mp"
+main = "worker.js"
+compatibility_date = "2025-06-01"
+
+[[durable_objects.bindings]]
+name = "ROOMS"
+class_name = "Room"
+
+# แผนฟรีของ Workers ใช้ Durable Objects แบบ SQLite เท่านั้น
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Room"]
